@@ -1,21 +1,17 @@
-import * as Koa from "koa";
-import * as Router from "koa-router";
-import * as logger from "koa-logger";
-import * as json from "koa-json";
+import Koa from "koa";
 
-const PORT = 3000;
+import logger from "koa-logger";
+import json from "koa-json";
+
+import router from "./router/router.js";
+
+const PORT = 5000;
 
 const app = new Koa();
-const router = new Router();
-
-router.get("/", async (ctx: Koa.Context, next: Koa.Next) => {
-  ctx.body = { message: "Hello World" };
-  await next();
-});
 
 app.use(json());
 app.use(logger());
-app.use(router.routes()).use(router.allowedMethods());
+app.use(router.routes).use(router.methods);
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
